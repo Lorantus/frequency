@@ -8,21 +8,32 @@
                 </p>
                 <hr>
 
-                <vue-tabs>
-                    <v-tab title="form 1">
-                        <form-fiche large/>
+                <vue-tabs @tab-change="handleTabChange">
+                    <v-tab title="Form 1">
+                        <form-fiche/>
                     </v-tab>
 
-                    <v-tab title="form 2">
+                    <v-tab title="Form 2">
                         <form-fiche small/>
                     </v-tab>
 
-                    <v-tab title="form 3">
+                    <v-tab title="Form 3">
                         <form-dates/>
                     </v-tab>
                 </vue-tabs>
+                
+                <br/>
+
+                <div class="field">
+                    <div class="control">
+                        <button 
+                            class="button is-primary"
+                            @click="save">Submit</button>
+                    </div>
+                </div>
 
             </section>
+            
 
         </div>
 
@@ -31,8 +42,8 @@
                 <div class="box">
                     <ul>          
                         <!-- loop through all the `form` properties and show their values -->
-                        <li v-for="(item, k) in form" :key="k">
-                        <strong>{{ k }}:</strong> {{ item }}
+                        <li v-for="(item, key) in form" :key="key">
+                        <strong>{{ key }}:</strong> {{ item }}
                         </li>
                     </ul>
                 </div>
@@ -47,10 +58,22 @@ import {VueTabs, VTab} from 'vue-nav-tabs';
 import 'vue-nav-tabs/themes/vue-tabs.css';
 import FormFiche from './components/FormFiche';
 import FormDates from './components/FormDates';
-import {DEFAULT_FREQUENCE} from './components/Frequences.es6';
-import { mapGetters } from 'vuex';
+import { createNamespacedHelpers } from 'vuex'
 
-const TODAY = new Date();
+const { mapGetters } = createNamespacedHelpers('fiche');
+
+const safeNull = value => value ? value.id : null;
+
+const SAVE_ACTIONS = [
+    form => {
+        console.log("Large save");
+        console.log(form);
+    },
+    form => {
+        console.log("Small save");
+        console.log(form);
+    }
+];
 
 export default {
     components: {
@@ -64,41 +87,76 @@ export default {
             form : {
                 counter: 0,
                 nom: null,
+                responsable: null,
                 dateEvaluation: null,
-                frequenceRegulatory: DEFAULT_FREQUENCE,
-                frequenceInternal: DEFAULT_FREQUENCE,
+                frequenceRegulatory: null,
+                frequenceInternal: null,
                 dateProchaineEvaluation: null
-            }
+            },
+            saveAction: SAVE_ACTIONS[0]
         }
     },
     computed: {
         ...mapGetters({
-            counter: 'getCounter',
-            nom: 'getNom',
-            dateEvaluation: 'getDateEvaluation',
-            frequenceRegulatory: 'getFrequenceRegulatory',
-            frequenceInternal: 'getFrequenceInternal',
-            dateProchaineEvaluation: 'getDateProchaineEvaluation'
+            counter: 'GET_COUNTER',
+            nom: 'GET_NOM',
+            dateEvaluation: 'GET_DATE_EVALUATION',
+            responsable: 'GET_RESPONSABLE',
+            frequenceRegulatory: 'GET_FREQUENCE_REGULATORY',
+            frequenceInternal: 'GET_FREQUENCE_INTERNAL',
+            dateProchaineEvaluation: 'GET_DATE_PROCHAINE_EVALUATION'
         })
     },
     watch: {
-        counter(counter) {
-            this.form.counter = counter;
+        counter: { 
+            handler(counter) {
+                this.form.counter = counter;
+            },
+            immediate: true
         },
-        nom(nom) {
-            this.form.nom = nom;
+        nom: { 
+            handler(nom) {
+                this.form.nom = nom;
+            },
+            immediate: true
         },
-        dateEvaluation(dateEvaluation) {
-            this.form.dateEvaluation = dateEvaluation;
+        dateEvaluation: { 
+            handler(dateEvaluation) {
+                this.form.dateEvaluation = dateEvaluation;
+            },
+            immediate: true
         },
-        frequenceRegulatory(frequence) {
-            this.form.frequenceRegulatory = frequence;
+        responsable: { 
+            handler(responsable) {
+                this.form.responsable = safeNull(responsable);
+            },
+            immediate: true
         },
-        frequenceInternal(frequence) {
-            this.form.frequenceInternal = frequence;
+        frequenceRegulatory: { 
+            handler(frequence) {
+                this.form.frequenceRegulatory = safeNull(frequence);
+            },
+            immediate: true
         },
-        dateProchaineEvaluation(dateProchaineEvaluation) {
-            this.form.dateProchaineEvaluation = dateProchaineEvaluation;
+        frequenceInternal: { 
+            handler(frequence) {
+                this.form.frequenceInternal = safeNull(frequence);
+            },
+            immediate: true
+        },
+        dateProchaineEvaluation: { 
+            handler(dateProchaineEvaluation) {
+                this.form.dateProchaineEvaluation = dateProchaineEvaluation;
+            },
+            immediate: true
+        },
+    },
+    methods: {
+        handleTabChange(tabIndex, newTab, oldTab){
+            this.saveAction = SAVE_ACTIONS[tabIndex];
+        },
+        save() {
+            this.saveAction && this.saveAction(this.form);
         }
     }
 }
