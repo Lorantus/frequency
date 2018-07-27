@@ -1,17 +1,16 @@
 import { FREQUENCES, DEFAULT_FREQUENCE } from '../../utils/Frequences.es6';
-import { RESPONSABLES } from '../../utils/Responsables.es6';
 
 const state = {
     FREQUENCES,
-    RESPONSABLES,
+    responsables: [],
     dateProchaineEvaluationSaisie: null,
     form: {
         counter: 0,
         nom: null,
         dateEvaluation: null,
         responsable: null,
-        frequenceRegulatory: DEFAULT_FREQUENCE,
-        frequenceInternal: DEFAULT_FREQUENCE,
+        frequenceRegulatory: DEFAULT_FREQUENCE.name,
+        frequenceInternal: DEFAULT_FREQUENCE.name,
         dateProchaineEvaluation: null
     }
 };
@@ -20,12 +19,16 @@ const mutations = (function () {
     const computeDateEvaluation = function(state) {
         const dateEvaluation = state.form.dateEvaluation;
         const dates = [state.form.frequenceRegulatory, state.form.frequenceInternal]
-            .filter(frequence => frequence.id != 'NONE')
-            .map(frequence => frequence.apply(dateEvaluation));
+            .filter(frequence => frequence != DEFAULT_FREQUENCE.name)
+            .map(frequence => FREQUENCES[frequence])
+            .map(frequence => frequence && frequence.apply(dateEvaluation));
         state.form.dateProchaineEvaluation = dateEvaluation && dates.length ? new Date(Math.min(...dates)) : state.dateProchaineEvaluationSaisie;
     }
     
     return {
+        UPDATE_RESPONSABLES(state, responsables) {
+            state.responsables = responsables;
+        },
         UPDATE_COUNTER(state, counter) {
             state.form.counter = counter;
         },
@@ -40,11 +43,11 @@ const mutations = (function () {
             state.form.responsable = responsable;
         },
         UPDATE_FREQUENCE_REGULATORY(state, frequenceRegulatory) {
-            state.form.frequenceRegulatory = frequenceRegulatory ||  DEFAULT_FREQUENCE;
+            state.form.frequenceRegulatory = frequenceRegulatory || DEFAULT_FREQUENCE.name;
             computeDateEvaluation(state);
         },
         UPDATE_FREQUENCE_INTERNAL(state, frequenceInternal) {
-            state.form.frequenceInternal = frequenceInternal ||  DEFAULT_FREQUENCE;
+            state.form.frequenceInternal = frequenceInternal || DEFAULT_FREQUENCE.name;
             computeDateEvaluation(state);
         },
         UPDATE_DATE_PROCHAINE_EVALUATION(state, dateProchaineEvaluation)  {

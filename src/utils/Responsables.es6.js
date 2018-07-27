@@ -1,12 +1,12 @@
 const enumBuilder = function () {
-    const enums = {};
+    const enums = [];
     return {
         push(id, nom, prenom) {
-            enums[id] = Object.freeze({
+            enums.push(Object.freeze({
                 id,
                 nom,
                 prenom
-            })
+            }));
             return this;
         },
         build() {

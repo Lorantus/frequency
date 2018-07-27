@@ -62,8 +62,6 @@ import { createNamespacedHelpers } from 'vuex'
 
 const { mapGetters } = createNamespacedHelpers('fiche');
 
-const safeNull = value => value ? value.id : null;
-
 const SAVE_ACTIONS = [
     form => {
         console.log("Large save");
@@ -128,19 +126,19 @@ export default {
         },
         responsable: { 
             handler(responsable) {
-                this.form.responsable = safeNull(responsable);
+                this.form.responsable = responsable;
             },
             immediate: true
         },
         frequenceRegulatory: { 
             handler(frequence) {
-                this.form.frequenceRegulatory = safeNull(frequence);
+                this.form.frequenceRegulatory = frequence;
             },
             immediate: true
         },
         frequenceInternal: { 
             handler(frequence) {
-                this.form.frequenceInternal = safeNull(frequence);
+                this.form.frequenceInternal = frequence;
             },
             immediate: true
         },

@@ -1,10 +1,10 @@
 const enumBuilder = function () {
     const enums = {};
     return {
-        push(id, label, action) {
-            enums[id] = Object.freeze({
-                id,
-                label,
+        push(name, label, action) {
+            enums[name] = Object.freeze({
+                name,
+                label: () => label,
                 apply: date => date ? action(date) : null
             })
             return this;

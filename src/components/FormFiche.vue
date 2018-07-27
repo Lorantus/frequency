@@ -30,15 +30,14 @@
 
             <div class="column">
                 <div class="field">
-                    <label class="label">Résponsable</label>
+                    <label class="label">Responsable</label>
                     <div class="control">
                         <div class="select">
                             <selecteur
                                 v-model="responsable"
-                                :items="responsables">
-                                <template slot-scope="current">
-                                    {{ current.item.nom }} {{ current.item.prenom }}
-                                </template>
+                                :items="responsables"
+                                :label="responsable => `${responsable.nom}, ${responsable.prenom}`"
+                                placeholder="Aucun">
                             </selecteur>
                         </div>
                     </div>
@@ -55,7 +54,9 @@
                         <div class="select">
                             <selecteur 
                                 v-model="frequenceRegulatory"
-                                :items="frequences"/>                 
+                                :items="frequences"
+                                option="name"
+                                label="label"/>                 
                         </div>
                     </div>
                 </div>
@@ -68,7 +69,9 @@
                         <div class="select">
                             <selecteur 
                                 v-model="frequenceInternal"
-                                :items="frequences"/>
+                                :items="frequences"
+                                option="name"
+                                label="label"/>      
                         </div>
                     </div>
                 </div>
@@ -107,7 +110,7 @@ export default {
     computed: {
         ...mapState(MODULE_VUEX_FICHE.module, {
             frequences: state => state.FREQUENCES,
-            responsables: state => state.RESPONSABLES
+            responsables: state => state.responsables
         }),
         counter: {
             get() {

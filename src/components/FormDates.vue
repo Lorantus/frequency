@@ -18,7 +18,9 @@
                         <div class="select">
                             <selecteur 
                                 v-model="frequenceRegulatory"
-                                :items="frequences"/>                 
+                                :items="frequences"
+                                option="name"
+                                label="label"/>
                         </div>
                     </div>
                 </div>
@@ -31,7 +33,9 @@
                         <div class="select">
                             <selecteur 
                                 v-model="frequenceInternal"
-                                :items="frequences"/>
+                                :items="frequences"
+                                option="name"
+                                label="label"/>
                         </div>
                     </div>
                 </div>

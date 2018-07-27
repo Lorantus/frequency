@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
+import Vuex, { mapActions } from 'vuex';
 import fiche from './modules/fiche.es6';
 
 Vue.use(Vuex)
