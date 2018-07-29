@@ -1,3 +1,5 @@
+import {enumBuilderObject} from './EnumBuilder.es6';
+
 const enumBuilder = function () {
     const enums = {};
     return {
@@ -15,7 +17,7 @@ const enumBuilder = function () {
     }
 };
 
-export const FREQUENCES = enumBuilder()
+export const FREQUENCES = enumBuilderObject('label', 'apply')
     .push('NONE', "Aucune", date => date)
     .push('MONTH_1', "Tous les mois", date => new Date(date).setMonth(date.getMonth() + 1))
     .push('MONTH_2', "Tous les 2 mois", date => new Date(date).setMonth(date.getMonth() + 2))

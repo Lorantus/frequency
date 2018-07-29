@@ -1,21 +1,6 @@
-const enumBuilder = function () {
-    const enums = [];
-    return {
-        push(id, nom, prenom) {
-            enums.push(Object.freeze({
-                id,
-                nom,
-                prenom
-            }));
-            return this;
-        },
-        build() {
-            return Object.freeze(enums);
-        }
-    }
-};
+import {enumBuilderArray} from './EnumBuilder.es6';
 
-export const RESPONSABLES = enumBuilder()
+export const RESPONSABLES = enumBuilderArray('id', 'nom', 'prenom')
     .push('ID1', "Responsable", "1")
     .push('ID2', "Responsable", "2")
     .push('ID3', "Responsable", "3")

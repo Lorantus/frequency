@@ -40,8 +40,7 @@
         <div class="column">
             <section class="section" id="results">
                 <div class="box">
-                    <ul>          
-                        <!-- loop through all the `form` properties and show their values -->
+                    <ul>
                         <li v-for="(item, key) in form" :key="key">
                         <strong>{{ key }}:</strong> {{ item }}
                         </li>
@@ -54,13 +53,23 @@
 </template>
 
 <script type="text/babel">
-import {VueTabs, VTab} from 'vue-nav-tabs';
-import 'vue-nav-tabs/themes/vue-tabs.css';
-import FormFiche from './components/FormFiche';
 import FormDates from './components/FormDates';
-import { createNamespacedHelpers } from 'vuex'
+import FormFiche from './components/FormFiche';
+import FormMixin from './components/FormMixin.es6';
+import {VTab, VueTabs} from 'vue-nav-tabs';
+import 'vue-nav-tabs/themes/vue-tabs.css';
 
-const { mapGetters } = createNamespacedHelpers('fiche');
+const mapWatch = (...array) => {
+    return array.reduce(function(acculuator, name) {
+        acculuator[name] = {
+            immediate: true,
+            handler(watchName) {
+                this.form[name] = watchName;
+            }
+        };
+        return acculuator;
+    }, {});
+};
 
 const SAVE_ACTIONS = [
     form => {
@@ -77,9 +86,10 @@ export default {
     components: {
         FormFiche,
         FormDates,
-        VueTabs,
-        VTab
+        VTab,
+        VueTabs
     },
+    mixins: [FormMixin],
     data() {
         return {
             form : {
@@ -94,63 +104,17 @@ export default {
             saveAction: SAVE_ACTIONS[0]
         }
     },
-    computed: {
-        ...mapGetters({
-            counter: 'GET_COUNTER',
-            nom: 'GET_NOM',
-            dateEvaluation: 'GET_DATE_EVALUATION',
-            responsable: 'GET_RESPONSABLE',
-            frequenceRegulatory: 'GET_FREQUENCE_REGULATORY',
-            frequenceInternal: 'GET_FREQUENCE_INTERNAL',
-            dateProchaineEvaluation: 'GET_DATE_PROCHAINE_EVALUATION'
-        })
-    },
-    watch: {
-        counter: { 
-            handler(counter) {
-                this.form.counter = counter;
-            },
-            immediate: true
-        },
-        nom: { 
-            handler(nom) {
-                this.form.nom = nom;
-            },
-            immediate: true
-        },
-        dateEvaluation: { 
-            handler(dateEvaluation) {
-                this.form.dateEvaluation = dateEvaluation;
-            },
-            immediate: true
-        },
-        responsable: { 
-            handler(responsable) {
-                this.form.responsable = responsable;
-            },
-            immediate: true
-        },
-        frequenceRegulatory: { 
-            handler(frequence) {
-                this.form.frequenceRegulatory = frequence;
-            },
-            immediate: true
-        },
-        frequenceInternal: { 
-            handler(frequence) {
-                this.form.frequenceInternal = frequence;
-            },
-            immediate: true
-        },
-        dateProchaineEvaluation: { 
-            handler(dateProchaineEvaluation) {
-                this.form.dateProchaineEvaluation = dateProchaineEvaluation;
-            },
-            immediate: true
-        },
-    },
+    watch: mapWatch(
+        'counter', 
+        'nom', 
+        'responsable',
+        'dateEvaluation',
+        'frequenceRegulatory',
+        'frequenceInternal',
+        'dateProchaineEvaluation'
+    ),
     methods: {
-        handleTabChange(tabIndex, newTab, oldTab){
+        handleTabChange(tabIndex){
             this.saveAction = SAVE_ACTIONS[tabIndex];
         },
         save() {

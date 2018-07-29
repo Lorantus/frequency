@@ -1,7 +1,6 @@
 <template>
     <div>
 
-        <!-- form starts here -->
         <div class="field">
             <label class="label">Counter</label>
             <div>
@@ -83,8 +82,7 @@
             <label class="label">Date prochaine évaluation</label>
             <date-picker 
                     v-model="dateProchaineEvaluation"
-                    lang="fr" format="DD-MM-YYYY"
-                    @change="setDateProchaineEvaluation"></date-picker>
+                    lang="fr" format="DD-MM-YYYY"></date-picker>
         </div>
 
     </div>              
@@ -93,10 +91,8 @@
 <script type="text/babel">
 import Counter from './Counter';
 import DatePicker from 'vue2-datepicker';
+import FormMixin from './FormMixin.es6';
 import Selecteur from './Selecteur';
-import { mapState, mapMutations, mapGetters } from 'vuex';
-import { MODULE_VUEX_FICHE } from '../store/store.es6.js';
-import moment from 'moment';
 
 export default {
     components: {
@@ -104,75 +100,9 @@ export default {
         DatePicker,
         Selecteur
     },
+    mixins: [FormMixin],
     props: {
         small: Boolean
-    },
-    computed: {
-        ...mapState(MODULE_VUEX_FICHE.module, {
-            frequences: state => state.FREQUENCES,
-            responsables: state => state.responsables
-        }),
-        counter: {
-            get() {
-                return this.$store.getters[MODULE_VUEX_FICHE.apply('GET_COUNTER')];
-            },
-            set(counter) {
-                this.$store.commit(MODULE_VUEX_FICHE.apply('UPDATE_COUNTER'), counter);   
-            }
-        },
-        nom: {
-            get() {
-                return this.$store.getters[MODULE_VUEX_FICHE.apply('GET_NOM')];
-            },
-            set(nom) {
-                this.$store.commit(MODULE_VUEX_FICHE.apply('UPDATE_NOM'), nom);   
-            }
-        },
-        dateEvaluation: {
-            get() {
-                return this.$store.getters[MODULE_VUEX_FICHE.apply('GET_DATE_EVALUATION')];
-            },
-            set(dateEvaluation) {
-                this.$store.commit(MODULE_VUEX_FICHE.apply('UPDATE_DATE_EVALUATION'), dateEvaluation);   
-            }
-        },
-        responsable: {
-            get() {
-                return this.$store.getters[MODULE_VUEX_FICHE.apply('GET_RESPONSABLE')];
-            },
-            set(responsable) {
-                this.$store.commit(MODULE_VUEX_FICHE.apply('UPDATE_RESPONSABLE'), responsable);   
-            }
-        },
-        frequenceRegulatory: {
-            get() {
-                return this.$store.getters[MODULE_VUEX_FICHE.apply('GET_FREQUENCE_REGULATORY')];
-            },
-            set(frequence) {
-                this.$store.commit(MODULE_VUEX_FICHE.apply('UPDATE_FREQUENCE_REGULATORY'), frequence);   
-            }
-        },
-        frequenceInternal: {
-            get() {
-                return this.$store.getters[MODULE_VUEX_FICHE.apply('GET_FREQUENCE_INTERNAL')];
-            },
-            set(frequence) {
-                this.$store.commit(MODULE_VUEX_FICHE.apply('UPDATE_FREQUENCE_INTERNAL'), frequence);   
-            }
-        },
-        dateProchaineEvaluation: {
-            get() {
-                return this.$store.getters[MODULE_VUEX_FICHE.apply('GET_DATE_PROCHAINE_EVALUATION')];
-            },
-            set(dateProchaineEvaluation) {
-                this.$store.commit(MODULE_VUEX_FICHE.apply('UPDATE_DATE_PROCHAINE_EVALUATION'), dateProchaineEvaluation);   
-            }
-        }        
-    },
-    methods: {
-        setDateProchaineEvaluation(dateEvaluation) {
-            this.$store.commit(MODULE_VUEX_FICHE.apply('UPDATE_DATE_PROCHAINE_EVALUATION_SAISIE'), dateEvaluation)
-        }
     }
 }
 </script>

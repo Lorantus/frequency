@@ -1,17 +1,8 @@
 import Vue from 'vue';
-import Vuex, { mapActions } from 'vuex';
+import Vuex from 'vuex';
 import fiche from './modules/fiche.es6';
 
-Vue.use(Vuex)
-
-const moduleBuilder = (module) => {
-    return {
-        module,
-        apply: name => `${module}/${name}`
-    }
-};
-
-export const MODULE_VUEX_FICHE = moduleBuilder('fiche');
+Vue.use(Vuex);
 
 export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
