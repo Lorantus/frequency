@@ -5,7 +5,7 @@ export function enumBuilderArray(...mapper) {
             enums.push(Object.freeze(values.reduce((accu, value, index) => {
                 accu[mapper[index]] = value;
                 return accu;
-            }, [])));
+            }, {})));
             return this;
         },
         build() {
