@@ -5,9 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "jest"
   },
   "dependencies": {
+    "babel-preset-env": "^1.7.0",
     "moment": "^2.22.2",
     "vue": "^2.5.16",
     "vue-nav-tabs": "^0.5.7",
@@ -18,12 +20,14 @@
     "@vue/cli-plugin-babel": "^3.0.0-rc.5",
     "@vue/cli-plugin-eslint": "^3.0.0-rc.5",
     "@vue/cli-service": "^3.0.0-rc.5",
+    "jest": "^23.4.2",
     "vue-template-compiler": "^2.5.16"
   },
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "jest": true
     },
     "extends": [
       "plugin:vue/essential",
@@ -43,5 +47,33 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "babel": {
+    "presets": [[
+      "env",
+      {
+        "targets:": {
+          "node": "6"
+        }
+      }
+    ]]
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "es6",
+      "js",
+      "json",
+      "vue"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "testMatch": [
+      "**/*Spec.(es6|js)"
+    ],
+    "testURL": "http://localhost/",
+    "transform": {
+      "^.+\\.(es6|js)$": "<rootDir>/node_modules/babel-jest"
+    }
+  }
 }

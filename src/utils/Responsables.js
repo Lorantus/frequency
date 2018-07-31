@@ -1,4 +1,4 @@
-import {enumBuilderArray} from './EnumBuilder.es6';
+import {enumBuilderArray} from './EnumBuilder';
 
 export const RESPONSABLES = enumBuilderArray('id', 'nom', 'prenom')
     .push('ID1', "Responsable", "1")

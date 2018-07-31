@@ -1,4 +1,4 @@
-import {enumBuilderObject} from './EnumBuilder.es6';
+import {enumBuilderObject} from './EnumBuilder';
 
 const enumBuilder = function () {
     const enums = {};
