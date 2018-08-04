@@ -55,7 +55,7 @@
 <script type="text/babel">
 import DatePicker from 'vue2-datepicker';
 import Selecteur from './Selecteur';
-import FormMixin from './FormMixin.es6';
+import FormMixin from './FormMixin';
 
 export default {
     components: {

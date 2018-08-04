@@ -1,4 +1,4 @@
-import { FREQUENCES, DEFAULT_FREQUENCE } from '../../utils/Frequences.es6';
+import { FREQUENCES, DEFAULT_FREQUENCE } from '../../utils/Frequences';
 
 const state = {
     FREQUENCES,

@@ -49,14 +49,11 @@
     "not ie <= 8"
   ],
   "babel": {
-    "presets": [[
-      "env",
-      {
-        "targets:": {
-          "node": "6"
-        }
+    "env": {
+      "test": {
+          "plugins": ["transform-es2015-modules-commonjs"]
       }
-    ]]
+    }
   },
   "jest": {
     "moduleFileExtensions": [

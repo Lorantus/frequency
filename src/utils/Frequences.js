@@ -1,22 +1,5 @@
 import {enumBuilderObject} from './EnumBuilder';
 
-const enumBuilder = function () {
-    const enums = {};
-    return {
-        push(name, label, action) {
-            enums[name] = Object.freeze({
-                name,
-                label: () => label,
-                apply: date => date ? action(date) : null
-            })
-            return this;
-        },
-        build() {
-            return Object.freeze(enums);
-        }
-    }
-};
-
 export const FREQUENCES = enumBuilderObject('label', 'apply')
     .push('NONE', "Aucune", date => date)
     .push('MONTH_1', "Tous les mois", date => new Date(date).setMonth(date.getMonth() + 1))

@@ -91,7 +91,7 @@
 <script type="text/babel">
 import Counter from './Counter';
 import DatePicker from 'vue2-datepicker';
-import FormMixin from './FormMixin.es6';
+import FormMixin from './FormMixin';
 import Selecteur from './Selecteur';
 
 export default {

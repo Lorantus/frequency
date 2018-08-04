@@ -12,7 +12,7 @@ export function enumBuilderArray(...mapper) {
             return Object.freeze(enums);
         }
     }
-};
+}
 
 export function enumBuilderObject(...mapper) {    
     const enums = {};
@@ -28,4 +28,4 @@ export function enumBuilderObject(...mapper) {
             return Object.freeze(enums);
         }
     }
-};
+}

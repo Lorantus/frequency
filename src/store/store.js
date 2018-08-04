@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import fiche from './modules/fiche.es6';
+import fiche from './modules/fiche';
 
 Vue.use(Vuex);
 

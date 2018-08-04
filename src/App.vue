@@ -55,7 +55,7 @@
 <script type="text/babel">
 import FormDates from './components/FormDates';
 import FormFiche from './components/FormFiche';
-import FormMixin from './components/FormMixin.es6';
+import FormMixin from './components/FormMixin';
 import {VTab, VueTabs} from 'vue-nav-tabs';
 import 'vue-nav-tabs/themes/vue-tabs.css';
 
